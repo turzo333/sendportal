@@ -8,7 +8,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions mbstring pdo_mysql zip exif pcntl gd memcached
-
+run
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -37,7 +37,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Add user for laravel application
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
-
+RUN php artisan vendor:publish --provider=Sendportal\\Base\\SendportalBaseServiceProvider
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
 
