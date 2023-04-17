@@ -1,5 +1,4 @@
 FROM php:7.3-fpm
-FROM node:14-alpine
 # Set working directory
 WORKDIR /var/www
 
