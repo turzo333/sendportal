@@ -37,7 +37,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Add user for laravel application
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
-RUN php artisan vendor:publish --provider=Sendportal\\Base\\SendportalBaseServiceProvider
+
 # Copy code to /var/www
 COPY --chown=www:www-data . /var/www
 
@@ -62,5 +62,8 @@ RUN composer update --optimize-autoloader --no-dev
 RUN chmod +x /var/www/docker/run.sh
 RUN cat > /var/www/storage/logs/laravel.log
 RUN chmod -R 777 /var/www/storage/logs/laravel.log
+RUN composer require mettle/sendportal-core
+
+RUN php artisan vendor:publish --provider=Sendportal\\Base\\SendportalBaseServiceProvider
 EXPOSE 80
 ENTRYPOINT ["/var/www/docker/run.sh"]
